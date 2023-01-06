@@ -70,12 +70,12 @@ describe('server.js', () => {
     })
     describe('[POST] /api/projects', () => {
       test('[5] responds with the newly created project', async () => {
-        const projectNew = { name: 'e', description: 'f', completed: true }
+        const projectNew = { name: 'e', description: 'f' }
         const res = await request(server).post('/api/projects').send(projectNew)
         expect(res.body).toMatchObject(projectNew)
       }, 750)
       test('[6] inserts a new project into projects table', async () => {
-        const projectNew = { name: 'e', description: 'f', completed: true }
+        const projectNew = { name: 'e', description: 'f' }
         await request(server).post('/api/projects').send(projectNew)
         const project = await Project.get(3)
         expect(project).toMatchObject(projectNew)
