@@ -46,11 +46,11 @@ router.post('/api/projects', async (req, res) => {
 router.put('/api/projects/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const { name, description, completed } = req.body
+        const { name, description, completed, notes } = req.body
         if (!name || !description) {
             res.status(400).json({ message: 'name and description required' })
         }
-        const updatedProject = await Projects.update(id, { name, description, completed })
+        const updatedProject = await Projects.update(id, { name, description, completed, notes })
         if (!updatedProject) {
             res.status(404).json({ message: `could not find project with id ${id}` })
         } else {
