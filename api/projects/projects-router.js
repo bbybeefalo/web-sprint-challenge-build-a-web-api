@@ -31,11 +31,11 @@ router.get('/api/projects/:id', async (req, res) => {
 
 router.post('/api/projects', async (req, res) => {
     try {
-        const { name, description } = req.body
+        const { name, description, completed } = req.body
         if (!name || !description) {
             res.status(400).json({ message: 'every project requires name and description' })
         } else {
-            const newProject = await Projects.insert({ name, description })
+            const newProject = await Projects.insert({ name, description, completed })
             res.status(201).json(newProject)
         }
     } catch {
