@@ -15,4 +15,14 @@ router.get('/api/projects', async (req, res) => {
     }
 })
 
+router.get('/api/projects/:id', async (req, res) => {
+    try {
+        const project = await Projects.get(req.params.id)
+        res.status(200).json(project)
+    } catch {
+        res.status(500).json({ message: 'argh' })
+    }
+})
+
+
 module.exports = router
