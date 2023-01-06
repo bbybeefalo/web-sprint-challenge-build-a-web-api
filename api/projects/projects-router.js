@@ -20,12 +20,26 @@ router.get('/api/projects/:id', async (req, res) => {
         const { id } = req.params
         const project = await Projects.get(id);
         if (!project) {
-            res.status(404).json({ message: `no project found with id ${id}`})
+            res.status(404).json({ message: `no project found with id ${id}` })
         } else {
             res.status(200).json(project)
         }
     } catch {
         res.status(500).json({ message: 'argh' })
+    }
+})
+
+router.post('/api/projects', async (req, res) => {
+    try {
+        const { name, description } = req.body
+        if (!name || !description) {
+            res.status(422).json({ message: 'every project requires name and description' })
+        } else {
+            const newProject = await Projects.insert({ name, description })
+            res.status(201).json(newProject)
+        }
+    } catch {
+        res.status(500).json({ message: 'error creating project' })
     }
 })
 
