@@ -17,8 +17,13 @@ router.get('/api/projects', async (req, res) => {
 
 router.get('/api/projects/:id', async (req, res) => {
     try {
-        const project = await Projects.get(req.params.id)
-        res.status(200).json(project)
+        const { id } = req.params
+        const project = await Projects.get(id);
+        if (!project) {
+            res.status(404).json({ message: `no project found with id ${id}`})
+        } else {
+            res.status(200).json(project)
+        }
     } catch {
         res.status(500).json({ message: 'argh' })
     }
