@@ -49,13 +49,13 @@ router.put('/:id', async (req, res ) => {
         const { id } = req.params;
         const { project_id, description, notes, completed } = req.body
         if (!project_id || !description || !notes || completed === null || completed === undefined) {
-            res.status(400).json({ message: 'provide all necessary info'})
+            return res.status(400).json({ message: 'provide all necessary info'})
         }
         const updatedAction = await Actions.update(id, req.body)
         if (!updatedAction) {
-            res.status(404).json({ message: 'no project found to update'})
+            return res.status(404).json({ message: 'no project found to update'})
         } else {
-            res.json(updatedAction)
+            return res.json(updatedAction)
         }
     } catch (error){
         res.status(500).json({ message: `${error}` })
