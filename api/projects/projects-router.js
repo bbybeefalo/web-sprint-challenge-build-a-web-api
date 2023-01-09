@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
         if (!updatedProject) {
            return res.status(404).json({ message: `could not find project` })
         } else {
-            return res.json({ updatedProject })
+            return res.json(updatedProject)
         }
     } catch(error) {
         res.status(500).json({ message: `error updating project ${error.message}` })
@@ -87,5 +87,6 @@ router.get('/:id/actions', async (req, res) => {
         res.status(500).json({ message: 'blah'})
     }
 })
+
 
 module.exports = router
