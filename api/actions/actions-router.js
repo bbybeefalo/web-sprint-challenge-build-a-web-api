@@ -34,13 +34,31 @@ router.post('/', async (req, res) => {
         if ( !project_id || !description || !notes ) {
             res.status(400).json({ message: 'every action needs the project id, a description, and notes'})
         } else {
-            if (project_id ) {
+            if (project_id) {
             const newNote = await Actions.insert({ project_id, description, completed, notes })
             res.json(newNote)
             }
         }
     } catch {
         res.status(500).json({ message: 'argh' })
+    }
+})
+
+router.put('/:id', async (req, res ) => {
+    try {
+        const { id } = req.params;
+        const { project_id, description, notes, completed } = req.body;
+        if ( !project_id || !description || !notes ) {
+            res.status(400).json( {message: 'could not update '} ) 
+        } 
+        const updatedAction = await Actions.update(id, req.body)
+        if (!updatedAction) {
+            res.status(404)
+        } else {
+            res.json(updatedAction)
+        }
+    } catch {
+        res.status(500).json({ message: 'oops '})
     }
 })
 
