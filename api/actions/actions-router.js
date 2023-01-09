@@ -47,18 +47,18 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res ) => {
     try {
         const { id } = req.params;
-        const { project_id, description, notes, completed } = req.body;
-        if (!project_id || !description || !notes || !completed) {
-            res.status(400).json( {message: 'could not update '} ) 
-        } 
+        const { project_id, description, notes, completed } = req.body
+        if (!project_id || !description || !notes || completed === null || completed === undefined) {
+            res.status(400).json({ message: 'provide all necessary info'})
+        }
         const updatedAction = await Actions.update(id, req.body)
         if (!updatedAction) {
-            res.status(404)
+            res.status(404).json({ message: 'no project found to update'})
         } else {
-            res.json({ updatedAction })
+            res.json(updatedAction)
         }
-    } catch {
-        res.status(500).json({ message: 'oops '})
+    } catch (error){
+        res.status(500).json({ message: `${error}` })
     }
 })
 
