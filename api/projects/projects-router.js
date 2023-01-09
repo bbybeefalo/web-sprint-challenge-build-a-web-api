@@ -47,8 +47,8 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const { name, description } = req.body
-        if (!name || !description) {
+        const { name, description, completed } = req.body
+        if (!name || !description || !completed) {
             res.status(400).json({ message: 'name and description required' })
         }
         const updatedProject = await Projects.update(id, req.body)

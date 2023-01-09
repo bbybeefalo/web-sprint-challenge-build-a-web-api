@@ -48,7 +48,7 @@ router.put('/:id', async (req, res ) => {
     try {
         const { id } = req.params;
         const { project_id, description, notes, completed } = req.body;
-        if ( !project_id || !description || !notes ) {
+        if ( !project_id || !description || !notes | !completed) {
             res.status(400).json( {message: 'could not update '} ) 
         } 
         const updatedAction = await Actions.update(id, req.body)
